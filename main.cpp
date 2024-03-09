@@ -1,11 +1,14 @@
 #include <iostream>
 #include <ncurses.h>
+#include "Leaderboard.h"
 
 const char *getBoardRow();
 
 int main() {
     initscr();
 
+    Leaderboard l;
+    l.writeScore(15);
     WINDOW *win = newwin(30,30,0,0);
     refresh();
 

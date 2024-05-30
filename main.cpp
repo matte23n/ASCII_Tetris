@@ -1,5 +1,5 @@
 #include <iostream>
-#include <ncurses.h>
+#include <curses.h>
 #include "Leaderboard.h"
 
 const char *getBoardRow();

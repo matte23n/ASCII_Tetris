@@ -9,6 +9,10 @@ add_executable(Ascii_Tetris main.cpp
         Board.cpp
         Board.h
         Leaderboard.cpp
-        Leaderboard.h)
+        Leaderboard.h
+        Line.cpp
+        Square.cpp
+        Startup_page.cpp
+        Tetramino.cpp)
 
 target_link_libraries(Ascii_Tetris ${CURSES_LIBRARIES})

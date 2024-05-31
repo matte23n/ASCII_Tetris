@@ -28,7 +28,7 @@ using namespace std;
         }
     }
 
-    void Startup_page::Game_Over(int x, int y){
+    void Startup_page::Game_Over(int x, int y, int *leaderboard){
         initscr();
         nocbreak();
         refresh();
@@ -39,7 +39,7 @@ using namespace std;
             wrefresh(win);
             int c = wgetch(win);
             if(c==KEY_ENTER){
-                Page_Setup(100,100);
+                Page_Setup(100,100, leaderboard);
             }
         }
     }

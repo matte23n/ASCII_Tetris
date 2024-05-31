@@ -1,42 +1,40 @@
 #include <iostream>
 #include <curses.h>
 #include "Leaderboard.h"
+#include "Board.h"
+#include "Game.h"
+
+#define BOARD_ROWS 30
+#define BOARD_COLS 30
 
 const char *getBoardRow();
 
 int main() {
     initscr();
+    noecho();
 
     Leaderboard l;
     l.writeScore(15);
-    WINDOW *win = newwin(30,30,0,0);
-    refresh();
 
-    wprintw(win,"%-15s %-10s\n", "FULL LINES: 0", getBoardRow());
-    wprintw(win,"%-15s %-10s\n", "LEVEL: 0", getBoardRow());
-    wprintw(win,"%-15s %-10s\n", "SCORE: 0", getBoardRow());
-    wprintw(win,"%-15s %-10s\n", "TIME: 0", getBoardRow());
 
-    for(int i = 0;i<20;i++) {
-        wprintw(win,"%-15s %-10s\n", "", getBoardRow());
-    }
+    Game game(BOARD_COLS, BOARD_ROWS);
+    //while (!game.isOver()) {
+        game.processInput();
 
-    wprintw(win,"%-15s %-10s\n", "", "<!********!>");
-    wprintw(win,"%-15s %-10s\n", "", R"(  \/\/\/\/  )");
 
-    wrefresh(win);
+        game.updateStatus();
 
-    //keypad(win, true);
 
-    wgetch(win);
+        //game.redraw();
+
+        game.processInput();
+    //}
+
 
     endwin();
     return 0;
 }
 
-const char* getBoardRow() {
-    return "<!........!>";
-}
 
 
 //

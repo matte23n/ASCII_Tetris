@@ -11,8 +11,14 @@ add_executable(Ascii_Tetris main.cpp
         Leaderboard.cpp
         Leaderboard.h
         Line.cpp
+        Line.h
         Square.cpp
+        Square.h
         Startup_page.cpp
-        Tetramino.cpp)
+        Startup_page.h
+        Tetramino.cpp
+        Tetramino.h
+        Game.cpp
+        Game.h)
 
 target_link_libraries(Ascii_Tetris ${CURSES_LIBRARIES})

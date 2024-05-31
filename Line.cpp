@@ -4,6 +4,10 @@
 
 #include "Line.h"
 
+Line::Line(int x, int y) : Tetramino(x, y) {
+    form = "[][][][]";
+}
+
 WINDOW* Line::CreateLineH(int x, int y) {
     initscr();
     nocbreak();

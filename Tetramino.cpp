@@ -5,6 +5,24 @@
 #include "Tetramino.h"
 using namespace std;
 
+Tetramino::Tetramino(int x, int y) {
+    this->x = x;
+    this->y = y;
+}
+
+int Tetramino::getX() {
+    return x;
+}
+
+int Tetramino::getY() {
+    return y;
+}
+
+char* Tetramino::getForm() {
+    return form;
+}
+
+
 void Tetramino::MoveTetraLeft(WINDOW *tetra, int x, int y){
     wmove(tetra,x+1,y);
 }
@@ -20,4 +38,5 @@ void Tetramino::MoveTetraDown(WINDOW *tetra, int x, int y) {
 void Tetramino::RotateTetra(Tetramino tetra) {
 
 }
+
 

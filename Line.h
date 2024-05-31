@@ -4,13 +4,16 @@
 
 #ifndef TETRIS_LINE_H
 #define TETRIS_LINE_H
+
 #include "Tetramino.h"
 #include "curses.h"
 
 
-class Line : public Tetramino{
+class Line : public Tetramino {
 public:
-    WINDOW* CreateLineH(int x, int y);
+    Line(int x, int y);
+
+    WINDOW *CreateLineH(int x, int y);
 
     void CreateLineV(int x, int y);
 

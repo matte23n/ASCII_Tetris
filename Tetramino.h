@@ -4,6 +4,7 @@
 
 #ifndef TETRIS_TETRAMINO_H
 #define TETRIS_TETRAMINO_H
+
 #include "curses.h"
 
 enum Direction {
@@ -16,26 +17,37 @@ enum Direction {
 class Tetramino {
 public :
     Tetramino();
+
     Tetramino(int x, int y);
 
     int getX();
+
     int getY();
 
     void setX(int x);
+
     void setY(int y);
 
-
-    char* getForm();
     void MoveTetraLeft(WINDOW *tetra, int x, int y);
 
     void MoveTetraRight(WINDOW *tetra, int x, int y);
 
     void MoveTetraDown(WINDOW *tetra, int x, int y);
 
-    void RotateTetra(Tetramino tetra);
+    void RotateTetra();
+
+    int getCurrentForm() const;
+
+    int (*getShape())[4];
+
+    void setShape(int newRotationCount, int newRotations[4][4][4]);
+
+
 protected:
-    int x,y;
-    char form[8];
+    int x, y;
+    int currentForm;
+    int rotationCount;
+    int possibleForms[4][4][4];
 };
 
 

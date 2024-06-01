@@ -4,7 +4,6 @@
 
 
 #include <iostream>
-//#include <print>
 #include "Board.h"
 #include "Line.h"
 
@@ -38,25 +37,25 @@ void Board::clearLine(int y) {
 }
 
 void Board::addTetramino(Tetramino *t) {
-    addAt(currentTetramino.getX(), currentTetramino.getY(), currentTetramino.getForm());
+    drawTetromino(t->getY(), t->getX(), *t);
 }
 
 Tetramino Board::spawnTetramino() {
-    Line line(2,0);
-    addTetramino(&line);
+    Line line(2, 0);
     currentTetramino = line;
+    addTetramino(&line);
     return line;
 }
 
 bool Board::canPlaceTetramino(int x, int y) {
-    int mx=0, my=0;
+    int mx = 0, my = 0;
     getmaxyx(board_win, mx, my);
-    std::cout << my;
-    if (x > 0 and y < my) {
+    my-=1;
+    if (x > 0 && y < my) {
         return true;
     }
-    if (y==my) {
-        spawnTetramino();
+    if (y == my) {
+        currentTetramino = spawnTetramino();
     }
     return false;
 }
@@ -67,7 +66,7 @@ void Board::getNewCoordinates(int direction, int &x, int &y) {
             x -= 1;
             break;
         case KEY_RIGHT:
-            x+= 1;
+            x += 1;
             break;
         case KEY_DOWN:
             y += 1;
@@ -81,24 +80,53 @@ void Board::moveTetramino(int direction) {
     int newX = currentTetramino.getX();
     int newY = currentTetramino.getY();
     getNewCoordinates(direction, newX, newY);
-    if (!canPlaceTetramino(newX, newY)) {
-        return;
-    }
-    clearLine(currentTetramino.getY());
-    switch (direction) {
-        case KEY_DOWN:
-            addAt(newX, newY, currentTetramino.getForm());
-            currentTetramino.setY(newY);
-            break;
-        default:
-            addAt(newX, currentTetramino.getY(), currentTetramino.getForm());
-            currentTetramino.setX(newX);
-            break;
+    if (canPlaceTetramino(newX, newY)) {
+        clearTetromino(currentTetramino.getY(), currentTetramino.getX(), currentTetramino);
+        switch (direction) {
+            case KEY_UP:
+                clearTetromino(currentTetramino.getY()+1, currentTetramino.getX(), currentTetramino);
+                currentTetramino.RotateTetra();
+            case KEY_DOWN:
+                drawTetromino(newY, newX, currentTetramino);
+                currentTetramino.setY(newY);
+                break;
+            default:
+                drawTetromino(newY, newX, currentTetramino);
+                currentTetramino.setX(newX);
+                break;
+        }
     }
 }
 
 void Board::addAt(int x, int y, char ch[]) {
     mvwaddstr(board_win, y, x, ch);
+}
+
+void Board::drawTetromino(int startY, int startX, Tetramino &tetromino) {
+    int (*shape)[4] = tetromino.getShape();
+    for (int y = 0; y < 4; ++y) {
+        for (int x = 0; x < 4; ++x) {
+            if (shape[y][x]) {
+                mvwprintw(board_win, startY + y, startX + x, "X");
+            }
+        }
+    }
+    wrefresh(board_win);
+}
+
+void Board::clearTetromino(int startY, int startX, Tetramino &tetromino) {
+    int (*shape)[4] = tetromino.getShape();
+    for (int y = 0; y < 4; ++y) {
+        for (int x = 0; x < 4; ++x) {
+            if (shape[y][x]) {
+                std::cout << startY + y;
+                std::cout << "SeeeS";
+                std::cout << startX + x;
+                mvwprintw(board_win, startY + y, startX + x, " ");
+            }
+        }
+    }
+    wrefresh(board_win);
 }
 
 int Board::getInput() {
@@ -118,5 +146,4 @@ void Board::clear() {
 void Board::refresh() {
     wrefresh(board_win);
 }
-
 

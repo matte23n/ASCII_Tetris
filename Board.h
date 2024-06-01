@@ -20,6 +20,8 @@ public:
     void moveTetramino(int direction);
     void addAt(int x, int y, char* ch);
     int getInput();
+    void drawTetromino(int startY, int startX, Tetramino &tetromino);
+    void clearTetromino(int startY, int startX, Tetramino &tetromino);
     chtype getCharAt(int x, int y);
     void clear();
 

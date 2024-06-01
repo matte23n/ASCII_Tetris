@@ -19,6 +19,8 @@ add_executable(Ascii_Tetris main.cpp
         Tetramino.cpp
         Tetramino.h
         Game.cpp
-        Game.h)
+        Game.h
+        GameInfo.cpp
+        GameInfo.h)
 
 target_link_libraries(Ascii_Tetris ${CURSES_LIBRARIES})

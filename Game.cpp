@@ -10,10 +10,10 @@
 Game::Game(int width, int heigth) {
     board = Board(width, heigth);
     board.initialize();
+    //gameInfo = GameInfo();
     isGameOver = false;
     board.spawnTetramino();
 }
-
 
 
 void Game::processInput() {

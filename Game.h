@@ -7,6 +7,7 @@
 
 #include <curses.h>
 #include "Board.h"
+#include "GameInfo.h"
 
 class Game {
 public:
@@ -19,6 +20,7 @@ public:
 private:
     Board board;
     bool isGameOver;
+    GameInfo gameInfo;
 };
 
 

@@ -13,27 +13,11 @@ Board::Board() {
 }
 
 Board::Board(int width, int height) {
-    border_win = newwin(width + 2, height + 2, 0, 0);
-    board_win = newwin(width, height, 1, 1);
+    border_win = newwin(width + 2, height + 2, 0, 15);
+    board_win = newwin(width, height, 1, 15);
     keypad(board_win, TRUE);
     keypad(stdscr, TRUE);
     wtimeout(board_win, 0);
-    //box(board_win, 0, 0);
-    //wrefresh(board_win);
-
-    //wprintw(win, "%-15s %-10s\n", "FULL LINES: 0", getBoardRow());
-    //wprintw(win, "%-15s %-10s\n", "LEVEL: 0", getBoardRow());
-    //wprintw(win, "%-15s %-10s\n", "SCORE: 0", getBoardRow());
-    //wprintw(win, "%-15s %-10s\n", "TIME: 0", getBoardRow());
-
-    /*for (int i = 0; i < 20; i++) {
-        wprintw(board_win, "%-15s %-10s\n", "", getBoardRow());
-    }
-
-    wprintw(board_win, "%-15s %-10s\n", "", "<!********!>");
-    wprintw(board_win, "%-15s %-10s\n", "", R"(  \/\/\/\/  )");
-*/
-
 }
 
 void Board::initialize() {
@@ -47,7 +31,7 @@ void Board::addBorder() {
 }
 
 void Board::clearLine(int y) {
-    wmove(board_win, y, 0);
+    wmove(board_win, y, 1);
     wclrtoeol(board_win);
 }
 

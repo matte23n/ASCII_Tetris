@@ -14,7 +14,6 @@ int main() {
     initscr();
     noecho();
     curs_set(0);
-    //cbreak();
     Leaderboard l;
     l.writeScore(15);
 
@@ -29,13 +28,8 @@ int main() {
         ts.tv_nsec = 100 * 1000 * 1000;
         nanosleep(&ts, NULL);
         game.processInput();
-        //game.updateStatus();
-        //game.redraw();
-        //game.processInput();
         i++;
     }
-
-
     endwin();
     return 0;
 }

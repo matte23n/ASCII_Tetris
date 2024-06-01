@@ -5,46 +5,14 @@
 #include "Line.h"
 
 Line::Line(int x, int y) : Tetramino(x, y) {
-    form = "[][][][]";
+    form[0]='[';
+    form[1]=']';
+    form[2]='[';
+    form[3]=']';
+    form[4]='[';
+    form[5]=']';
+    form[6]='[';
+    form[7]=']';
 }
 
-WINDOW* Line::CreateLineH(int x, int y) {
-    initscr();
-    nocbreak();
-    WINDOW *line= newwin(1,4,x,y);
-    wprintw(line,"[][][][]");
-    wrefresh(line);
-    return line;
-}
 
-void Line::CreateLineV(int x, int y) {
-    initscr();
-    nocbreak();
-    WINDOW *line= newwin(4,1,x,y);
-    wprintw(line,"[]\n[]\n[]\n[]");
-    wrefresh(line);
-}
-
-void Line::Line1x1(int x, int y) {
-    initscr();
-    nocbreak();
-    WINDOW *line= newwin(1,1,x,y);
-    wprintw(line,"[]");
-    wrefresh(line);
-}
-
-void Line::Line1x2(int x, int y) {
-    initscr();
-    nocbreak();
-    WINDOW *line= newwin(2,1,x,y);
-    wprintw(line,"[]\n[]");
-    wrefresh(line);
-}
-
-void Line::Line1x3(int x, int y) {
-    initscr();
-    nocbreak();
-    WINDOW *line= newwin(3,1,x,y);
-    wprintw(line,"[]\n[]\n[]");
-    wrefresh(line);
-}

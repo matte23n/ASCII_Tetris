@@ -12,17 +12,6 @@
 class Line : public Tetramino {
 public:
     Line(int x, int y);
-
-    WINDOW *CreateLineH(int x, int y);
-
-    void CreateLineV(int x, int y);
-
-    void Line1x1(int x, int y);
-
-    void Line1x2(int x, int y);
-
-    void Line1x3(int x, int y);
-
 };
 
 

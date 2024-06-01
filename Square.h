@@ -9,9 +9,7 @@
 
 class Square: public Tetramino {
 public:
-    void CreateSquare(int x, int y);
-
-    void HalfSquare(int x,int y);
+    Square(int x, int y);
 };
 
 

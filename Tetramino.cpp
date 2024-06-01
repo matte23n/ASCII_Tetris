@@ -53,8 +53,6 @@ void Tetramino::setY(int y) {
     Tetramino::y = y;
 }
 
-void Tetramino::setForm(char *form) {
-    Tetramino::form = form;
-}
+
 
 

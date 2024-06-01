@@ -23,7 +23,7 @@ public :
 
     void setX(int x);
     void setY(int y);
-    void setForm(char *form);
+
 
     char* getForm();
     void MoveTetraLeft(WINDOW *tetra, int x, int y);
@@ -35,7 +35,7 @@ public :
     void RotateTetra(Tetramino tetra);
 protected:
     int x,y;
-    char* form;
+    char form[8];
 };
 
 

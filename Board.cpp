@@ -4,7 +4,7 @@
 
 
 #include <iostream>
-#include <print>
+//#include <print>
 #include "Board.h"
 #include "Line.h"
 
@@ -65,10 +65,13 @@ void Board::getNewCoordinates(int direction, int &x, int &y) {
     switch (direction) {
         case KEY_LEFT:
             x -= 1;
+            break;
         case KEY_RIGHT:
             x+= 1;
+            break;
         case KEY_DOWN:
             y += 1;
+            break;
         default:
             break;
     }
@@ -94,7 +97,7 @@ void Board::moveTetramino(int direction) {
     }
 }
 
-void Board::addAt(int x, int y, char *ch) {
+void Board::addAt(int x, int y, char ch[]) {
     mvwaddstr(board_win, y, x, ch);
 }
 

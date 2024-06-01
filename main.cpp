@@ -1,9 +1,10 @@
 #include <iostream>
 #include <curses.h>
-#include <print>
+//#include <print>
 #include "Leaderboard.h"
 #include "Board.h"
 #include "Game.h"
+#include <chrono>
 
 #define BOARD_ROWS 30
 #define BOARD_COLS 30

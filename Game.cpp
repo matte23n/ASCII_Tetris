@@ -3,6 +3,7 @@
 //
 
 #include <print>
+#include <iostream>
 #include "Game.h"
 #include "Line.h"
 
@@ -10,16 +11,22 @@ Game::Game(int width, int heigth) {
     board = Board(width, heigth);
     board.initialize();
     isGameOver = false;
+    board.spawnTetramino();
 }
 
+
+
 void Game::processInput() {
-    chtype input = board.getInput();
+    int input = board.getInput();
     //move tetramino
+    board.moveTetramino(input);
 }
 
 void Game::updateStatus() {
     //update score, time ecc
-    Line line(4,7);
+    board.moveTetramino(KEY_DOWN);
+    //sleep(2);
+    /*Line line(4,7);
     board.addTetramino(&line);
     board.refresh();
     sleep(1);
@@ -32,7 +39,7 @@ void Game::updateStatus() {
     Line line2(4,9);
     board.addTetramino(&line2);
     board.refresh();
-    sleep(1);
+    sleep(1);*/
 }
 
 void Game::redraw() {

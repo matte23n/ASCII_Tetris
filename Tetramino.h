@@ -15,10 +15,16 @@ enum Direction {
 
 class Tetramino {
 public :
+    Tetramino();
     Tetramino(int x, int y);
 
     int getX();
     int getY();
+
+    void setX(int x);
+    void setY(int y);
+    void setForm(char *form);
+
     char* getForm();
     void MoveTetraLeft(WINDOW *tetra, int x, int y);
 

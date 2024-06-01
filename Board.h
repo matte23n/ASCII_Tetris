@@ -17,15 +17,25 @@ public:
     void addBorder();
     void clearLine(int y);
     void addTetramino(Tetramino* t);
+    void moveTetramino(int direction);
     void addAt(int x, int y, char* ch);
-    chtype getInput();
+    int getInput();
+    chtype getCharAt(int x, int y);
     void clear();
 
     void refresh();
+
+    Tetramino spawnTetramino();
+
 private:
     WINDOW *board_win;
     WINDOW *border_win;
-    const char* getBoardRow();
+    Tetramino currentTetramino;
+
+    bool canPlaceTetramino(int x, int y);
+
+    void getNewCoordinates(int direction, int& x, int& y);
+
 };
 
 

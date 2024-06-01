@@ -3,7 +3,13 @@
 //
 
 #include "Tetramino.h"
+
 using namespace std;
+
+Tetramino::Tetramino() {
+    this->x = 0;
+    this->y = 0;
+}
 
 Tetramino::Tetramino(int x, int y) {
     this->x = x;
@@ -18,25 +24,37 @@ int Tetramino::getY() {
     return y;
 }
 
-char* Tetramino::getForm() {
+char *Tetramino::getForm() {
     return form;
 }
 
 
-void Tetramino::MoveTetraLeft(WINDOW *tetra, int x, int y){
-    wmove(tetra,x+1,y);
+void Tetramino::MoveTetraLeft(WINDOW *tetra, int x, int y) {
+    wmove(tetra, x + 1, y);
 }
 
 void Tetramino::MoveTetraRight(WINDOW *tetra, int x, int y) {
-    wmove(tetra,x-1,y);
+    wmove(tetra, x - 1, y);
 }
 
 void Tetramino::MoveTetraDown(WINDOW *tetra, int x, int y) {
-    wmove(tetra,x,y-1);
+    wmove(tetra, x, y - 1);
 }
 
 void Tetramino::RotateTetra(Tetramino tetra) {
 
+}
+
+void Tetramino::setX(int x) {
+    Tetramino::x = x;
+}
+
+void Tetramino::setY(int y) {
+    Tetramino::y = y;
+}
+
+void Tetramino::setForm(char *form) {
+    Tetramino::form = form;
 }
 
 

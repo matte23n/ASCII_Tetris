@@ -13,9 +13,11 @@ class Game {
 public:
     Game(int width, int height);
     void processInput();
-    void redraw();
+    void updateGameInfo();
     void updateStatus();
     bool isOver();
+
+    void setIsGameOver(bool isGameOver);
 
 private:
     Board board;

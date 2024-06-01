@@ -18,8 +18,8 @@ Board::Board(int width, int height) {
     board_win = newwin(width, height, 1, 15);
     keypad(board_win, TRUE);
     keypad(stdscr, TRUE);
-    wtimeout(board_win, 300);
-    //nodelay(board_win, TRUE);
+    //wtimeout(board_win, 300);
+    nodelay(board_win, TRUE);
 }
 
 void Board::initialize() {
@@ -69,6 +69,8 @@ void Board::getNewCoordinates(int direction, int &x, int &y) {
             x+= 1;
         case KEY_DOWN:
             y += 1;
+        default:
+            break;
     }
 }
 
@@ -79,9 +81,9 @@ void Board::moveTetramino(int direction) {
     if (!canPlaceTetramino(newX, newY)) {
         return;
     }
+    clearLine(currentTetramino.getY());
     switch (direction) {
         case KEY_DOWN:
-            clearLine(currentTetramino.getY());
             addAt(newX, newY, currentTetramino.getForm());
             currentTetramino.setY(newY);
             break;

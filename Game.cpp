@@ -18,13 +18,15 @@ Game::Game(int width, int heigth) {
 
 void Game::processInput() {
     int input = board.getInput();
-    board.moveTetramino(input);
+    if (input != -1) {
+        board.moveTetramino(input);
+    }
 }
 
 void Game::updateStatus() {
     //update score, time ecc
     board.moveTetramino(KEY_DOWN);
-    gameInfo.waitRefresh();
+    //gameInfo.waitRefresh();
     //sleep(2);
     /*Line line(4,7);
     board.addTetramino(&line);
@@ -42,10 +44,16 @@ void Game::updateStatus() {
     sleep(1);*/
 }
 
-void Game::redraw() {
-    board.refresh();
+void Game::updateGameInfo() {
+    //board.refresh();
+    gameInfo.setTime(gameInfo.getTime() + 1);
+    gameInfo.updateStatus();
 }
 
 bool Game::isOver() {
     return isGameOver;
+}
+
+void Game::setIsGameOver(bool isGameOver) {
+    Game::isGameOver = isGameOver;
 }

@@ -10,7 +10,7 @@
 Game::Game(int width, int heigth) {
     board = Board(width, heigth);
     board.initialize();
-    //gameInfo = GameInfo();
+    gameInfo = GameInfo();
     isGameOver = false;
     board.spawnTetramino();
 }
@@ -18,13 +18,13 @@ Game::Game(int width, int heigth) {
 
 void Game::processInput() {
     int input = board.getInput();
-    //move tetramino
     board.moveTetramino(input);
 }
 
 void Game::updateStatus() {
     //update score, time ecc
     board.moveTetramino(KEY_DOWN);
+    gameInfo.waitRefresh();
     //sleep(2);
     /*Line line(4,7);
     board.addTetramino(&line);

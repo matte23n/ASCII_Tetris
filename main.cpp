@@ -21,12 +21,8 @@ int main() {
     Game game(BOARD_COLS, BOARD_ROWS);
     int i = 0;
     //while (!game.isOver()) {
-    while (i < 100) {
+    while (i < 20) {
         game.updateStatus();
-        struct timespec ts;
-        ts.tv_sec = 0;
-        ts.tv_nsec = 100 * 1000 * 1000;
-        nanosleep(&ts, NULL);
         game.processInput();
         i++;
     }

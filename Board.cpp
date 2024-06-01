@@ -4,6 +4,7 @@
 
 
 #include <iostream>
+#include <print>
 #include "Board.h"
 #include "Line.h"
 
@@ -17,7 +18,8 @@ Board::Board(int width, int height) {
     board_win = newwin(width, height, 1, 15);
     keypad(board_win, TRUE);
     keypad(stdscr, TRUE);
-    wtimeout(board_win, 0);
+    wtimeout(board_win, 300);
+    //nodelay(board_win, TRUE);
 }
 
 void Board::initialize() {
@@ -42,7 +44,6 @@ void Board::addTetramino(Tetramino *t) {
 Tetramino Board::spawnTetramino() {
     Line line(2,0);
     addTetramino(&line);
-    refresh();
     currentTetramino = line;
     return line;
 }
@@ -93,7 +94,6 @@ void Board::moveTetramino(int direction) {
 
 void Board::addAt(int x, int y, char *ch) {
     mvwaddstr(board_win, y, x, ch);
-    refresh();
 }
 
 int Board::getInput() {

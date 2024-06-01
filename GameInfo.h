@@ -28,12 +28,16 @@ public:
 
     void setTime(int time);
 
+    void updateStatus();
+    void waitRefresh();
+
 private:
     WINDOW *gameInfo_win;
     int fullLines = 0;
     int level = 0;
     int score = 0;
     int time = 0;
+
 };
 
 

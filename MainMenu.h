@@ -6,10 +6,9 @@
 #define TETRIS_STARTUP_PAGE_H
 
 
-class Startup_page {
+class MainMenu {
 public:
-    void Page_Setup();
-
+    MainMenu();
 };
 
 

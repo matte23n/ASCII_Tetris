@@ -1,6 +1,6 @@
 #include <curses.h>
 #include "Leaderboard.h"
-#include "Startup_page.h"
+#include "MainMenu.h"
 
 
 const char *getBoardRow();
@@ -11,10 +11,7 @@ int main() {
     cbreak();
     curs_set(0);
 
-    Startup_page s;
-    s.Page_Setup();
-    /*Game game(BOARD_COLS, BOARD_ROWS);
-    game.run();*/
+    MainMenu s;
     return 0;
 }
 

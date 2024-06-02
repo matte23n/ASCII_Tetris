@@ -5,12 +5,12 @@
 #ifndef ASCII_TETRIS_GAMEOVER_H
 #define ASCII_TETRIS_GAMEOVER_H
 #include "curses.h"
-#include "Startup_page.h"
+#include "MainMenu.h"
 
 
 class GameOver {
 public:
-    void Game_Over();
+    GameOver();
 };
 
 

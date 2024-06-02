@@ -54,7 +54,7 @@ void GameInfo::updateStatus() {
     mvwprintw(gameInfo_win, 2, 0, "Lines: %d", fullLines);
     int minutes = time / 60;
     int secs = (time - (minutes) * 60);
-    mvwprintw(gameInfo_win, 3, 0, "Time: %d:%d", minutes, secs);
+    mvwprintw(gameInfo_win, 3, 0, "Time: %d:%02d", minutes, secs);
     wrefresh(gameInfo_win);
 }
 

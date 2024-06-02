@@ -3,20 +3,20 @@
 //
 
 #include "GameOver.h"
-void GameOver::Game_Over(){
+
+GameOver::GameOver() {
     initscr();
     WINDOW *win = newwin(50, 50, 0, 0);
-    keypad(win,true);
-    nodelay(win,false);
+    keypad(win, true);
+    nodelay(win, false);
     wprintw(win, "GAME OVER");
-    mvwaddstr(win,10,10,"press key up to return to main menu");
+    mvwaddstr(win, 10, 10, "press key up to return to main menu");
     wrefresh(win);
     int c = wgetch(win);
-    while(c!=KEY_UP) {
-        c=wgetch(win);
+    while (c != KEY_UP) {
+        c = wgetch(win);
     }
     werase(win);
     refresh();
-    Startup_page s;
-    s.Page_Setup();
+    MainMenu s;
 }

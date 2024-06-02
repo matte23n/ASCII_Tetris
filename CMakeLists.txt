@@ -14,8 +14,8 @@ add_executable(Ascii_Tetris main.cpp
         shapes/Line.h
         shapes/Square.cpp
         shapes/Square.h
-        Startup_page.cpp
-        Startup_page.h
+        MainMenu.cpp
+        MainMenu.h
         Tetramino.cpp
         Tetramino.h
         Game.cpp

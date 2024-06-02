@@ -23,7 +23,7 @@ public:
 
 private:
     Board board;
-    bool isGameOver;
+    bool isGameOver = false;
     GameInfo gameInfo;
     int boardHeight;
     int boardWidth;

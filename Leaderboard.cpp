@@ -7,6 +7,7 @@
 #include "MainMenu.h"
 
 using namespace std;
+char *opciones[2]={"main menu","quit"};
 
 Leaderboard::Leaderboard() {
     WINDOW *win = newwin(100, 100, 0, 0);
@@ -31,12 +32,41 @@ void Leaderboard::readLearboard(WINDOW *board) {
         waddch(board, ch);
     }
     inputFile.close();
-    waddstr(board, "press key up to return to main menu");
-    int c = wgetch(board);
-    while (c != KEY_UP) {
-        c = wgetch(board);
+    int highlight=0;
+    while (true) {
+        for (int i = 0; i < 2; i++) {
+            if (i == highlight) {
+                wattron(board, A_REVERSE);
+            }
+            mvwprintw(board, i + 1, 10, opciones[i]);
+            wattroff(board, A_REVERSE);
+        }
+        int c = wgetch(board);
+        switch (c) {
+            case KEY_UP:
+                highlight--;
+                if (highlight < 0) {
+                    highlight = 0;
+                }
+                break;
+            case KEY_DOWN:
+                highlight++;
+                if (highlight > 1) {
+                    highlight = 1;
+                }
+                break;
+            default:
+                break;
+        }
+        if (c == 10) {
+            break;
+        }
     }
-    werase(board);
-    MainMenu s;
+    if(highlight==0){
+        MainMenu s;
+    }else{
+        werase(board);
+        refresh();
+    }
 
 }

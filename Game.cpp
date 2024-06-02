@@ -33,7 +33,7 @@ Game::Game(int width, int heigth) {
 }
 
 void Game::spawnTetramino() {
-    //srand(time(NULL));
+    srand(time(NULL));
     currentTetramino = shapes[rand() % 7];
     currentTetramino->setX((rand() % (boardWidth - 3)));
     currentTetramino->setY(0);

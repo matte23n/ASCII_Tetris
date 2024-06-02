@@ -3,6 +3,7 @@
 //
 
 #include "GameOver.h"
+char *scelte[2]={"main menu","quit"};
 
 GameOver::GameOver() {
     initscr();
@@ -10,13 +11,41 @@ GameOver::GameOver() {
     keypad(win, true);
     nodelay(win, false);
     wprintw(win, "GAME OVER");
-    mvwaddstr(win, 10, 10, "press key up to return to main menu");
     wrefresh(win);
-    int c = wgetch(win);
-    while (c != KEY_UP) {
-        c = wgetch(win);
+    int highlight=0;
+    while (true) {
+        for (int i = 0; i < 2; i++) {
+            if (i == highlight) {
+                wattron(win, A_REVERSE);
+            }
+            mvwprintw(win, i + 1, 1, scelte[i]);
+            wattroff(win, A_REVERSE);
+        }
+        int c = wgetch(win);
+        switch (c) {
+            case KEY_UP:
+                highlight--;
+                if (highlight < 0) {
+                    highlight = 0;
+                }
+                break;
+            case KEY_DOWN:
+                highlight++;
+                if (highlight > 1) {
+                    highlight = 1;
+                }
+                break;
+            default:
+                break;
+        }
+        if (c == 10) {
+            break;
+        }
     }
-    werase(win);
-    refresh();
-    MainMenu s;
+    if(highlight==0){
+        MainMenu s;
+    }else{
+        werase(win);
+        refresh();
+    }
 }

@@ -7,12 +7,11 @@
 #include "shapes/Square.h"
 #include "shapes/TShape.h"
 #include <chrono>
-#include <iostream>
 
 Game::Game(int width, int heigth) {
     board = Board(width, heigth);
-    boardHeight = heigth;
     boardWidth = width;
+    boardHeight = heigth;
     board.initialize();
     gameInfo = GameInfo();
     isGameOver = false;
@@ -23,19 +22,22 @@ Game::Game(int width, int heigth) {
 
 void Game::spawnTetramino() {
     currentTetramino = shapes[rand() % 3];
-    currentTetramino->setX((rand() % (boardWidth - 5)));
+    currentTetramino->setX((rand() % (boardWidth - 3)));
     currentTetramino->setY(0);
-    board.addTetramino(currentTetramino);
+    // Check if the new tetromino can be placed
+    if (!board.canMove(*currentTetramino, 0, currentTetramino->getX())) {
+        // Game over
+        setIsGameOver(true);
+    } else {
+        board.addTetramino(currentTetramino);
+    }
 }
 
 void Game::run() {
-    int i = 0;
-
     auto lastMove = std::chrono::steady_clock::now();
     auto lastInfoUpdate = std::chrono::steady_clock::now();
     int moveInterval = 600;
     int infoInterval = 1000;
-    int seconds = 0;
     spawnTetramino();
 
     while (!isOver()) {
@@ -54,13 +56,7 @@ void Game::run() {
         if (std::chrono::duration_cast<std::chrono::milliseconds>(now - lastInfoUpdate).count() >= infoInterval) {
             updateGameInfo();
             lastInfoUpdate = now;
-            seconds++;
         }
-
-        if (seconds == 60) {
-            setIsGameOver(true);
-        }
-        i++;
         moveInterval = 600/gameInfo.getLevel();
     }
     endwin();

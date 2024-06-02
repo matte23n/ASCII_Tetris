@@ -3,14 +3,13 @@
 //
 #include <iostream>
 #include "Board.h"
-#include "shapes/Line.h"
 
 Board::Board() {
     board_win = newwin(0, 0, 0, 0);
 }
 
 Board::Board(int width, int height) {
-    board_win = newwin(width + 2, height + 2, 1, 14);
+    board_win = newwin(height + 2, width + 2, 1, 14);
     boardWidth = width;
     boardHeight = height;
     board = new int *[boardHeight];

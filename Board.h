@@ -29,7 +29,6 @@ public:
 
 private:
     WINDOW *board_win;
-    WINDOW *border_win;
     int boardHeight = 0;
     int boardWidth = 0;
     int **board;

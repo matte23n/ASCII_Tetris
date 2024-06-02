@@ -22,7 +22,7 @@ int main() {
 
     auto lastMove = std::chrono::steady_clock::now();
     auto lastInfoUpdate = std::chrono::steady_clock::now();
-    int moveInterval = 1000;  // Interval in milliseconds
+    int moveInterval = 150;  // Interval in milliseconds
     int infoInterval = 1000;  // Interval in millisecond
     int seconds = 0;
 

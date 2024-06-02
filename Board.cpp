@@ -6,13 +6,11 @@
 #include "Line.h"
 
 Board::Board() {
-    border_win = newwin(0, 0, 0, 0);
     board_win = newwin(0, 0, 0, 0);
 }
 
 Board::Board(int width, int height) {
-    border_win = newwin(width, height, 0, 15);
-    board_win = newwin(width - 2, height - 2, 1, 16);
+    board_win = newwin(width + 2, height + 2, 1, 14);
     boardWidth = width;
     boardHeight = height;
     board = new int *[boardHeight];
@@ -28,11 +26,10 @@ Board::Board(int width, int height) {
 void Board::initialize() {
     clear();
     refresh();
-    wrefresh(border_win);
 }
 
 void Board::addBorder() {
-    box(border_win, 0, 0);
+    box(board_win, 0, 0);
 }
 
 void Board::addTetramino(Tetramino *t) {
@@ -52,7 +49,7 @@ void Board::fixTetromino(Tetramino &tetromino, int posY, int posX) {
 }
 
 Tetramino Board::spawnTetramino() {
-    Line line(2, 0);
+    Line line((rand() % (boardWidth - 4 + 1)), 0);
     currentTetramino = line;
     addTetramino(&line);
     return line;
@@ -66,7 +63,7 @@ bool Board::canMove(Tetramino &tetromino, int newY, int newX) {
             if (shape[y][x]) {
                 int newBoardY = newY + y;
                 int newBoardX = newX + x;
-                if (newBoardY < 0 || newBoardY >= boardHeight - 2 || newBoardX < 0 || newBoardX >= boardWidth - 2 ||
+                if (newBoardY < 0 || newBoardY >= boardHeight || newBoardX < 0 || newBoardX >= boardWidth ||
                     board[newBoardY][newBoardX]) {
                     return false;
                 }
@@ -82,11 +79,8 @@ void Board::updateBoard(int prevY, int prevX, Tetramino &tetromino, int startY, 
 }
 
 bool Board::isLineFull(int line) {
-    int mx = 0, my = 0;
-    getmaxyx(board_win, mx, my);
-    int j;
-    for (j = 0; j < mx; j++) {
-        if (board[line][j] == 0) {
+    for (int x = 0; x < boardWidth; ++x) {
+        if (board[line][x] == 0) {
             return false;
         }
     }
@@ -111,6 +105,7 @@ void Board::clearLine(int line) {
 
 void Board::redrawBoard() {
     werase(board_win);
+    box(board_win, 0, 0);
     for (int y = 0; y < boardHeight; ++y) {
         for (int x = 0; x < boardWidth; ++x) {
             if (board[y][x]) {
@@ -167,7 +162,7 @@ void Board::drawTetromino(int startY, int startX, Tetramino &tetromino) {
     for (int y = 0; y < 4; ++y) {
         for (int x = 0; x < 4; ++x) {
             if (shape[y][x]) {
-                mvwprintw(board_win, startY + y, startX + x, "X");
+                mvwprintw(board_win, startY + y + 1, startX + x + 1, "X");
             }
         }
     }
@@ -179,7 +174,7 @@ void Board::clearTetromino(int startY, int startX, Tetramino &tetromino) {
     for (int y = 0; y < 4; ++y) {
         for (int x = 0; x < 4; ++x) {
             if (shape[y][x]) {
-                mvwprintw(board_win, startY + y, startX + x, " ");
+                mvwprintw(board_win, startY + y + 1, startX + x + 1, " ");
             }
         }
     }
@@ -191,7 +186,6 @@ int Board::getInput() {
 }
 
 void Board::clear() {
-    wclear(border_win);
     wclear(board_win);
     addBorder();
 }

@@ -1,8 +1,6 @@
 //
 // Created by Matteo Santoro on 26/02/24.
 //
-
-
 #include <iostream>
 #include "Board.h"
 #include "Line.h"
@@ -60,21 +58,27 @@ Tetramino Board::spawnTetramino() {
     return line;
 }
 
-bool Board::canPlaceTetramino(int x, int y) {
-    int mx = 0, my = 0;
-    getmaxyx(board_win, mx, my);
-    if (x >= 0 && y < my - 1 && (x + 3) < mx) {
-        return true;
-    }
-    if (y == my - 1) {
-        fixTetromino(currentTetramino, y, x);
-        if (isLineFull(my)) {
-            clearLine(my);
-            redrawBoard();
+bool Board::canMove(Tetramino &tetromino, int newY, int newX) {
+    int size = 4;
+    int (*shape)[4] = tetromino.getShape();
+    for (int y = 0; y < size; ++y) {
+        for (int x = 0; x < size; ++x) {
+            if (shape[y][x]) {
+                int newBoardY = newY + y;
+                int newBoardX = newX + x;
+                if (newBoardY < 0 || newBoardY >= boardHeight - 2 || newBoardX < 0 || newBoardX >= boardWidth - 2 ||
+                    board[newBoardY][newBoardX]) {
+                    return false;
+                }
+            }
         }
-        currentTetramino = spawnTetramino();
     }
-    return false;
+    return true;
+}
+
+void Board::updateBoard(int prevY, int prevX, Tetramino &tetromino, int startY, int startX) {
+    clearTetromino(prevY, prevX, tetromino);
+    drawTetromino(startY, startX, tetromino);
 }
 
 bool Board::isLineFull(int line) {
@@ -117,41 +121,43 @@ void Board::redrawBoard() {
     wrefresh(board_win);
 }
 
-void Board::getNewCoordinates(int direction, int &x, int &y) {
-    switch (direction) {
-        case KEY_LEFT:
-            x -= 1;
-            break;
-        case KEY_RIGHT:
-            x += 1;
-            break;
-        case KEY_DOWN:
-            y += 1;
-            break;
-        default:
-            break;
-    }
-}
-
 void Board::moveTetramino(int direction) {
-    int newX = currentTetramino.getX();
-    int newY = currentTetramino.getY();
-    getNewCoordinates(direction, newX, newY);
-    if (canPlaceTetramino(newX, newY)) {
-        clearTetromino(currentTetramino.getY(), currentTetramino.getX(), currentTetramino);
-        switch (direction) {
-            case KEY_UP:
-                clearTetromino(currentTetramino.getY() + 1, currentTetramino.getX(), currentTetramino);
-                currentTetramino.RotateTetra();
-            case KEY_DOWN:
-                drawTetromino(newY, newX, currentTetramino);
-                currentTetramino.setY(newY);
-                break;
-            default:
-                drawTetromino(newY, newX, currentTetramino);
-                currentTetramino.setX(newX);
-                break;
+    int currentX = currentTetramino.getX();
+    int prevX = currentTetramino.getX();
+    int currentY = currentTetramino.getY();
+    int prevY = currentTetramino.getY();
+
+    if (direction == KEY_UP) {
+        Tetramino temp = currentTetramino;
+        temp.RotateTetra();
+        if (canMove(temp, currentY, currentX)) {
+            currentTetramino = temp;
         }
+    } else if (direction == KEY_LEFT && canMove(currentTetramino, currentY, currentX - 1)) {
+        currentX--;
+        currentTetramino.setX(currentX);
+    }
+    else if (direction == KEY_RIGHT && canMove(currentTetramino, currentY, currentX + 1)) {
+        currentX++;
+        currentTetramino.setX(currentX);
+    }
+    else if (direction == KEY_DOWN && canMove(currentTetramino, currentY + 1, currentX)) {
+        currentY++;
+        currentTetramino.setY(currentY);
+    }
+
+    updateBoard(prevY, prevX, currentTetramino, currentY, currentX);
+
+    if (!canMove(currentTetramino, currentY + 1, currentX)) {
+        fixTetromino(currentTetramino, currentY, currentX);
+
+        for (int y = 0; y < boardHeight; ++y) {
+            if (isLineFull(y)) {
+                clearLine(y);
+                redrawBoard();
+            }
+        }
+        spawnTetramino();
     }
 }
 

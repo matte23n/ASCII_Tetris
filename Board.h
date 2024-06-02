@@ -36,13 +36,13 @@ private:
 
     Tetramino currentTetramino;
 
-    bool canPlaceTetramino(int x, int y);
-
-    void getNewCoordinates(int direction, int& x, int& y);
-
     bool isLineFull(int line);
     void clearLine(int line);
     void redrawBoard();
+
+    void updateBoard(int prevY, int prevX, Tetramino &tetromino, int startY, int startX);
+
+    bool canMove(Tetramino &tetromino, int newY, int newX);
 };
 
 

@@ -13,8 +13,14 @@ Board::Board() {
 }
 
 Board::Board(int width, int height) {
-    border_win = newwin(width + 2, height + 2, 0, 15);
-    board_win = newwin(width, height, 1, 15);
+    border_win = newwin(width, height, 0, 15);
+    board_win = newwin(width - 2, height - 2, 1, 16);
+    boardWidth = width;
+    boardHeight = height;
+    board = new int *[boardHeight];
+    for (int i = 0; i < boardHeight; ++i) {
+        board[i] = new int[boardWidth]();
+    }
     keypad(board_win, TRUE);
     keypad(stdscr, TRUE);
     //wtimeout(board_win, 300);
@@ -31,13 +37,20 @@ void Board::addBorder() {
     box(border_win, 0, 0);
 }
 
-void Board::clearLine(int y) {
-    wmove(board_win, y, 1);
-    wclrtoeol(board_win);
-}
-
 void Board::addTetramino(Tetramino *t) {
     drawTetromino(t->getY(), t->getX(), *t);
+}
+
+// Function to fix the tetromino on the board
+void Board::fixTetromino(Tetramino &tetromino, int posY, int posX) {
+    int (*shape)[4] = tetromino.getShape();
+    for (int y = 0; y < 4; ++y) {
+        for (int x = 0; x < 4; ++x) {
+            if (shape[y][x]) {
+                board[posY + y][posX + x] = 1;
+            }
+        }
+    }
 }
 
 Tetramino Board::spawnTetramino() {
@@ -50,14 +63,58 @@ Tetramino Board::spawnTetramino() {
 bool Board::canPlaceTetramino(int x, int y) {
     int mx = 0, my = 0;
     getmaxyx(board_win, mx, my);
-    my-=1;
-    if (x > 0 && y < my) {
+    if (x >= 0 && y < my - 1 && (x + 3) < mx) {
         return true;
     }
-    if (y == my) {
+    if (y == my - 1) {
+        fixTetromino(currentTetramino, y, x);
+        if (isLineFull(my)) {
+            clearLine(my);
+            redrawBoard();
+        }
         currentTetramino = spawnTetramino();
     }
     return false;
+}
+
+bool Board::isLineFull(int line) {
+    int mx = 0, my = 0;
+    getmaxyx(board_win, mx, my);
+    int j;
+    for (j = 0; j < mx; j++) {
+        if (board[line][j] == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void Board::clearLine(int line) {
+    for (int x = 0; x < boardWidth; ++x) {
+        board[line][x] = 0;
+    }
+
+    for (int y = line; y > 0; --y) {
+        for (int x = 0; x < boardWidth; ++x) {
+            board[y][x] = board[y - 1][x];
+        }
+    }
+
+    for (int x = 0; x < boardWidth; ++x) {
+        board[0][x] = 0;
+    }
+}
+
+void Board::redrawBoard() {
+    werase(board_win);
+    for (int y = 0; y < boardHeight; ++y) {
+        for (int x = 0; x < boardWidth; ++x) {
+            if (board[y][x]) {
+                mvwprintw(board_win, y + 1, x + 1, "X");
+            }
+        }
+    }
+    wrefresh(board_win);
 }
 
 void Board::getNewCoordinates(int direction, int &x, int &y) {
@@ -84,7 +141,7 @@ void Board::moveTetramino(int direction) {
         clearTetromino(currentTetramino.getY(), currentTetramino.getX(), currentTetramino);
         switch (direction) {
             case KEY_UP:
-                clearTetromino(currentTetramino.getY()+1, currentTetramino.getX(), currentTetramino);
+                clearTetromino(currentTetramino.getY() + 1, currentTetramino.getX(), currentTetramino);
                 currentTetramino.RotateTetra();
             case KEY_DOWN:
                 drawTetromino(newY, newX, currentTetramino);
@@ -96,10 +153,6 @@ void Board::moveTetramino(int direction) {
                 break;
         }
     }
-}
-
-void Board::addAt(int x, int y, char ch[]) {
-    mvwaddstr(board_win, y, x, ch);
 }
 
 void Board::drawTetromino(int startY, int startX, Tetramino &tetromino) {
@@ -119,9 +172,6 @@ void Board::clearTetromino(int startY, int startX, Tetramino &tetromino) {
     for (int y = 0; y < 4; ++y) {
         for (int x = 0; x < 4; ++x) {
             if (shape[y][x]) {
-                std::cout << startY + y;
-                std::cout << "SeeeS";
-                std::cout << startX + x;
                 mvwprintw(board_win, startY + y, startX + x, " ");
             }
         }
@@ -131,10 +181,6 @@ void Board::clearTetromino(int startY, int startX, Tetramino &tetromino) {
 
 int Board::getInput() {
     return wgetch(board_win);
-}
-
-chtype Board::getCharAt(int x, int y) {
-    return mvwinch(board_win, x, y);
 }
 
 void Board::clear() {

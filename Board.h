@@ -15,14 +15,12 @@ public:
 
     void initialize();
     void addBorder();
-    void clearLine(int y);
     void addTetramino(Tetramino* t);
+    void fixTetromino(Tetramino &tetromino, int posY, int posX);
     void moveTetramino(int direction);
-    void addAt(int x, int y, char* ch);
     int getInput();
     void drawTetromino(int startY, int startX, Tetramino &tetromino);
     void clearTetromino(int startY, int startX, Tetramino &tetromino);
-    chtype getCharAt(int x, int y);
     void clear();
 
     void refresh();
@@ -32,12 +30,19 @@ public:
 private:
     WINDOW *board_win;
     WINDOW *border_win;
+    int boardHeight = 0;
+    int boardWidth = 0;
+    int **board;
+
     Tetramino currentTetramino;
 
     bool canPlaceTetramino(int x, int y);
 
     void getNewCoordinates(int direction, int& x, int& y);
 
+    bool isLineFull(int line);
+    void clearLine(int line);
+    void redrawBoard();
 };
 
 

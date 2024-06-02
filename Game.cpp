@@ -2,8 +2,6 @@
 // Created by Matteo Santoro on 31/05/24.
 //
 
-//#include <print>
-#include <iostream>
 #include "Game.h"
 #include "Line.h"
 

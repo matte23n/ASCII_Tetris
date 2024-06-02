@@ -1,4 +1,3 @@
-#include <iostream>
 #include <curses.h>
 #include "Leaderboard.h"
 #include "Game.h"
@@ -46,7 +45,7 @@ int main() {
             seconds++;
         }
 
-        if (seconds == 10) {
+        if (seconds == 45) {
             game.setIsGameOver(true);
         }
         i++;

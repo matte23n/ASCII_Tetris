@@ -17,7 +17,6 @@ public:
     void addBorder();
     void addTetramino(Tetramino* t);
     void fixTetromino(Tetramino &tetromino, int posY, int posX);
-    void moveTetramino(int direction);
     int getInput();
     void drawTetromino(int startY, int startX, Tetramino &tetromino);
     void clearTetromino(int startY, int startX, Tetramino &tetromino);

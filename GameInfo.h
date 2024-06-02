@@ -34,7 +34,7 @@ public:
 private:
     WINDOW *gameInfo_win;
     int fullLines = 0;
-    int level = 0;
+    int level = 1;
     int score = 0;
     int time = 0;
 

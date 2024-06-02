@@ -21,7 +21,7 @@ void Game::run() {
 
     auto lastMove = std::chrono::steady_clock::now();
     auto lastInfoUpdate = std::chrono::steady_clock::now();
-    int moveInterval = 150;  // Interval in milliseconds
+    int moveInterval = 600;  // Interval in milliseconds
     int infoInterval = 1000;  // Interval in millisecond
     int seconds = 0;
 
@@ -44,10 +44,11 @@ void Game::run() {
             seconds++;
         }
 
-        if (seconds == 45) {
+        if (seconds == 300) {
             setIsGameOver(true);
         }
         i++;
+        moveInterval = 600/gameInfo.getLevel();
     }
     endwin();
 }
@@ -112,6 +113,8 @@ void Game::makeTetraminoFall() {
         for (int y = 0; y < boardHeight; ++y) {
             if (board.isLineFull(y)) {
                 gameInfo.setScore(gameInfo.getScore() + 10);
+                gameInfo.setLevel(gameInfo.getLevel() + 1);
+                gameInfo.setFullLines(gameInfo.getFullLines() + 1);
                 gameInfo.updateStatus();
                 board.clearLine(y);
                 board.redrawBoard();

@@ -8,9 +8,9 @@
 
 class Startup_page {
 public:
-    void Page_Setup(int x, int y, int *leaderboard);
+    void Page_Setup(int x, int y);
 
-    void Game_Over(int x, int y, int *leaderboard);
+    void Game_Over(int x, int y);
 };
 
 

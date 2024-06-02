@@ -1,6 +1,6 @@
 #include <curses.h>
 #include "Leaderboard.h"
-#include "Game.h"
+#include "Startup_page.h"
 
 #define BOARD_ROWS 18
 #define BOARD_COLS 20
@@ -12,9 +12,13 @@ int main() {
     noecho();
     cbreak();
     curs_set(0);
+    Leaderboard l;
+    l.writeScore(15);
 
-    Game game(BOARD_COLS, BOARD_ROWS);
-    game.run();
+    Startup_page s;
+    s.Page_Setup(BOARD_COLS,BOARD_ROWS);
+    /*Game game(BOARD_COLS, BOARD_ROWS);
+    game.run();*/
     return 0;
 }
 

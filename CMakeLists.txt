@@ -23,6 +23,14 @@ add_executable(Ascii_Tetris main.cpp
         GameInfo.cpp
         GameInfo.h
         shapes/TShape.cpp
-        shapes/TShape.h)
+        shapes/TShape.h
+        shapes/RLshape.cpp
+        shapes/RLshape.h
+        shapes/LLshape.cpp
+        shapes/LLshape.h
+        shapes/SRshape.cpp
+        shapes/SRshape.h
+        shapes/SLshape.cpp
+        shapes/SLshape.h)
 
 target_link_libraries(Ascii_Tetris ${CURSES_LIBRARIES})

@@ -5,30 +5,36 @@
 #include "Startup_page.h"
 #include "curses.h"
 #include "Leaderboard.h"
-#include "iostream"
+#include "Game.h"
 using namespace std;
 
-    void Startup_page::Page_Setup(int x, int y, int *leaderboard) {
+    void Startup_page::Page_Setup(int x, int y) {
         initscr();
-        WINDOW *win = newwin(x, y, 0, 0);
+        WINDOW *win = newwin(60, 60, 0, 0);
         wprintw(win, "TETRIS");
+        mvwaddstr(win,10,10,"press key up to start");
+        mvwaddstr(win,15,10,"press key down to see leaderboard");
         keypad(win,true);
         wrefresh(win);
         while (true) {
             wrefresh(win);
             int c = wgetch(win);
             if (c == KEY_UP){
-                wprintw(win,"ciao");
+                wclear(win);
+                wrefresh(win);
                 delwin(win);
-                endwin();
+                Game game(x,y);
+                game.run();
             } else if (c==1) {
+                wclear(win);
+                wrefresh(win);
                 Leaderboard l;
-                l.readLearboard(leaderboard);
+                l.readLearboard(win);
             }
         }
     }
 
-    void Startup_page::Game_Over(int x, int y, int *leaderboard){
+    void Startup_page::Game_Over(int x, int y){
         initscr();
         nocbreak();
         refresh();
@@ -39,7 +45,7 @@ using namespace std;
             wrefresh(win);
             int c = wgetch(win);
             if(c==KEY_ENTER){
-                Page_Setup(100,100, leaderboard);
+                Page_Setup(100,100);
             }
         }
     }

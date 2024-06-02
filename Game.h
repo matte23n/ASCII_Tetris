@@ -27,7 +27,7 @@ private:
     GameInfo gameInfo;
     int boardHeight;
     int boardWidth;
-    Tetramino *shapes[3];
+    Tetramino *shapes[7];
     Tetramino *currentTetramino;
     void spawnTetramino();
 };

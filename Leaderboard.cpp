@@ -13,14 +13,13 @@ void Leaderboard::writeScore(int score) {
     outputFile.close();
 }
 
-void Leaderboard::readLearboard(int *leaderboard) {
+void Leaderboard::readLearboard(WINDOW *board) {
     ifstream inputFile;
     inputFile.open("leaderboard.txt");
     char ch;
-    int i = 0;
     while (!inputFile.eof()) {
         inputFile.get(ch);
-        leaderboard[i] = (int)ch;
+        waddrawch(board,ch);
     }
     inputFile.close();
 }

@@ -6,7 +6,12 @@
 #include "shapes/Line.h"
 #include "shapes/Square.h"
 #include "shapes/TShape.h"
+#include "shapes/LLshape.h"
+#include "shapes/RLshape.h"
+#include "shapes/SLshape.h"
+#include "shapes/SRshape.h"
 #include <chrono>
+#include <cstdlib>
 
 Game::Game(int width, int heigth) {
     board = Board(width, heigth);
@@ -18,10 +23,14 @@ Game::Game(int width, int heigth) {
     shapes[0] = new Line();
     shapes[1] = new Square();
     shapes[2] = new TShape();
+    shapes[3] = new RLshape();
+    shapes[4] = new LLshape();
+    shapes[5] = new SLshape();
+    shapes[6] = new SRshape();
 }
 
 void Game::spawnTetramino() {
-    currentTetramino = shapes[rand() % 3];
+    currentTetramino = shapes[rand() % 7];
     currentTetramino->setX((rand() % (boardWidth - 3)));
     currentTetramino->setY(0);
     // Check if the new tetromino can be placed

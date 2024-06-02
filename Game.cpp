@@ -12,6 +12,8 @@
 #include "shapes/SRshape.h"
 #include <chrono>
 #include <cstdlib>
+#include "GameOver.h"
+#include "Leaderboard.h"
 
 Game::Game(int width, int heigth) {
     board = Board(width, heigth);
@@ -30,6 +32,7 @@ Game::Game(int width, int heigth) {
 }
 
 void Game::spawnTetramino() {
+    srand(time(NULL));
     currentTetramino = shapes[rand() % 7];
     currentTetramino->setX((rand() % (boardWidth - 3)));
     currentTetramino->setY(0);
@@ -43,6 +46,7 @@ void Game::spawnTetramino() {
 }
 
 void Game::run() {
+    GameOver g;
     auto lastMove = std::chrono::steady_clock::now();
     auto lastInfoUpdate = std::chrono::steady_clock::now();
     int moveInterval = 600;
@@ -68,7 +72,11 @@ void Game::run() {
         }
         moveInterval = 600/gameInfo.getLevel();
     }
-    endwin();
+    Leaderboard::writeScore(gameInfo.getScore());
+    werase(board.getBoardWIn());
+    werase(gameInfo.getGameInfoWin());
+    refresh();
+    g.Game_Over();
 }
 
 void Game::processInput() {

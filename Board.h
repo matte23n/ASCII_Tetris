@@ -34,6 +34,8 @@ public:
 
     void redrawBoard();
 
+    WINDOW* getBoardWIn();
+
 private:
     WINDOW *board_win;
     int boardHeight = 0;

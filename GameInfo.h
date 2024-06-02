@@ -31,6 +31,8 @@ public:
     void updateStatus();
     void waitRefresh();
 
+    WINDOW *getGameInfoWin() const;
+
 private:
     WINDOW *gameInfo_win;
     int fullLines = 0;

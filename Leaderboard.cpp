@@ -4,7 +4,15 @@
 
 #include "Leaderboard.h"
 #include "fstream"
+#include "Startup_page.h"
 using namespace std;
+
+Leaderboard::Leaderboard() {
+    WINDOW* win= newwin(100,100,0,0);
+    nodelay(win,false);
+    keypad(win,true);
+    readLearboard(win);
+}
 
 void Leaderboard::writeScore(int score) {
     ofstream outputFile;
@@ -19,7 +27,16 @@ void Leaderboard::readLearboard(WINDOW *board) {
     char ch;
     while (!inputFile.eof()) {
         inputFile.get(ch);
-        waddrawch(board,ch);
+        waddch(board,ch);
     }
     inputFile.close();
+    waddstr(board,"press key up to return to main menu");
+    int c=wgetch(board);
+    while(c!=KEY_UP){
+        c= wgetch(board);
+    }
+    werase(board);
+        Startup_page s;
+        s.Page_Setup();
+
 }

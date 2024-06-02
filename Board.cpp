@@ -145,3 +145,7 @@ void Board::refresh() {
     wrefresh(board_win);
 }
 
+WINDOW* Board::getBoardWIn(){
+    return board_win;
+}
+

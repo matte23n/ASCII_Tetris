@@ -31,6 +31,8 @@ add_executable(Ascii_Tetris main.cpp
         shapes/SRshape.cpp
         shapes/SRshape.h
         shapes/SLshape.cpp
-        shapes/SLshape.h)
+        shapes/SLshape.h
+        GameOver.cpp
+        GameOver.h)
 
 target_link_libraries(Ascii_Tetris ${CURSES_LIBRARIES})

@@ -8,9 +8,8 @@
 
 class Startup_page {
 public:
-    void Page_Setup(int x, int y);
+    void Page_Setup();
 
-    void Game_Over(int x, int y);
 };
 
 

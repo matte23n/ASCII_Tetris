@@ -8,7 +8,8 @@
 
 class Leaderboard {
 public:
-    void writeScore(int score);
+    Leaderboard();
+    static void writeScore(int score);
 
     void readLearboard(WINDOW *board);
 };

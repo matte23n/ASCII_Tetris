@@ -9,7 +9,7 @@ void GameOver::Game_Over(){
     keypad(win,true);
     nodelay(win,false);
     wprintw(win, "GAME OVER");
-    waddstr(win,"press key up to return to main menu");
+    mvwaddstr(win,10,10,"press key up to return to main menu");
     wrefresh(win);
     int c = wgetch(win);
     while(c!=KEY_UP) {

@@ -110,13 +110,18 @@ void Game::processInput() {
 
         if (!board.canMove(*currentTetramino, currentY + 1, currentX)) {
             board.fixTetromino(*currentTetramino, currentY, currentX);
-
+            int fulllines =0;
             for (int y = 0; y < boardHeight; ++y) {
                 if (board.isLineFull(y)) {
+                    fulllines++;
+                    gameInfo.setLevel(gameInfo.getLevel() + 1);
+                    gameInfo.setFullLines(gameInfo.getFullLines() + 1);
                     board.clearLine(y);
                     board.redrawBoard();
                 }
             }
+            gameInfo.setScore(gameInfo.getScore() + (10*(fulllines*fulllines)));
+            gameInfo.updateStatus();
             spawnTetramino();
         }
     }
@@ -135,17 +140,18 @@ void Game::makeTetraminoFall() {
                           currentTetramino->getX());
     } else {
         board.fixTetromino(*currentTetramino, currentY, currentX);
-
+        int fulllines =0;
         for (int y = 0; y < boardHeight; ++y) {
             if (board.isLineFull(y)) {
-                gameInfo.setScore(gameInfo.getScore() + 10);
+                fulllines++;
                 gameInfo.setLevel(gameInfo.getLevel() + 1);
                 gameInfo.setFullLines(gameInfo.getFullLines() + 1);
-                gameInfo.updateStatus();
                 board.clearLine(y);
                 board.redrawBoard();
             }
         }
+        gameInfo.setScore(gameInfo.getScore() + (10*(fulllines*fulllines)));
+        gameInfo.updateStatus();
         spawnTetramino();
     }
 

@@ -5,13 +5,13 @@
 #ifndef TETRIS_LINE_H
 #define TETRIS_LINE_H
 
-#include "Tetramino.h"
+#include "../Tetramino.h"
 #include "curses.h"
 
 
 class Line : public Tetramino {
 public:
-    Line(int x, int y);
+    Line();
 };
 
 

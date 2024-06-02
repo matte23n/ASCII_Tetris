@@ -7,18 +7,9 @@
 
 #include "curses.h"
 
-enum Direction {
-    up,
-    left,
-    right,
-    rotate
-};
-
 class Tetramino {
 public :
     Tetramino();
-
-    Tetramino(int x, int y);
 
     int getX();
 

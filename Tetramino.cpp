@@ -12,12 +12,6 @@ Tetramino::Tetramino() {
     this->currentForm = 0;
 }
 
-Tetramino::Tetramino(int x, int y) {
-    this->x = x;
-    this->y = y;
-    this->currentForm = 0;
-}
-
 int Tetramino::getX() {
     return x;
 }

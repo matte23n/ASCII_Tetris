@@ -3,7 +3,7 @@
 //
 #include <iostream>
 #include "Board.h"
-#include "Line.h"
+#include "shapes/Line.h"
 
 Board::Board() {
     board_win = newwin(0, 0, 0, 0);
@@ -46,13 +46,6 @@ void Board::fixTetromino(Tetramino &tetromino, int posY, int posX) {
             }
         }
     }
-}
-
-Tetramino Board::spawnTetramino() {
-    Line line((rand() % (boardWidth - 4 + 1)), 0);
-    currentTetramino = line;
-    addTetramino(&line);
-    return line;
 }
 
 bool Board::canMove(Tetramino &tetromino, int newY, int newX) {

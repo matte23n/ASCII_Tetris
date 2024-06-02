@@ -4,7 +4,7 @@
 
 #include "Line.h"
 
-Line::Line(int x, int y) : Tetramino(x, y) {
+Line::Line() : Tetramino() {
     int iShapeRotations[2][4][4] = {
             {
                     {0, 0, 0, 0},

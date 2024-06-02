@@ -24,11 +24,7 @@ public:
 
     void refresh();
 
-    Tetramino spawnTetramino();
-
     bool canMove(Tetramino &tetromino, int newY, int newX);
-
-    Tetramino currentTetramino;
 
     void updateBoard(int prevY, int prevX, Tetramino &tetromino, int startY, int startX);
 

@@ -3,8 +3,11 @@
 //
 
 #include "Game.h"
-#include "Line.h"
+#include "shapes/Line.h"
+#include "shapes/Square.h"
+#include "shapes/TShape.h"
 #include <chrono>
+#include <iostream>
 
 Game::Game(int width, int heigth) {
     board = Board(width, heigth);
@@ -13,7 +16,16 @@ Game::Game(int width, int heigth) {
     board.initialize();
     gameInfo = GameInfo();
     isGameOver = false;
-    board.spawnTetramino();
+    shapes[0] = new Line();
+    shapes[1] = new Square();
+    shapes[2] = new TShape();
+}
+
+void Game::spawnTetramino() {
+    currentTetramino = shapes[rand() % 3];
+    currentTetramino->setX((rand() % (boardWidth - 5)));
+    currentTetramino->setY(0);
+    board.addTetramino(currentTetramino);
 }
 
 void Game::run() {
@@ -21,9 +33,10 @@ void Game::run() {
 
     auto lastMove = std::chrono::steady_clock::now();
     auto lastInfoUpdate = std::chrono::steady_clock::now();
-    int moveInterval = 600;  // Interval in milliseconds
-    int infoInterval = 1000;  // Interval in millisecond
+    int moveInterval = 600;
+    int infoInterval = 1000;
     int seconds = 0;
+    spawnTetramino();
 
     while (!isOver()) {
 
@@ -44,7 +57,7 @@ void Game::run() {
             seconds++;
         }
 
-        if (seconds == 300) {
+        if (seconds == 60) {
             setIsGameOver(true);
         }
         i++;
@@ -56,34 +69,34 @@ void Game::run() {
 void Game::processInput() {
     int direction = board.getInput();
     if (direction != -1) {
-        int currentX = board.currentTetramino.getX();
-        int prevX = board.currentTetramino.getX();
-        int currentY = board.currentTetramino.getY();
-        int prevY = board.currentTetramino.getY();
+        int currentX = currentTetramino->getX();
+        int prevX = currentTetramino->getX();
+        int currentY = currentTetramino->getY();
+        int prevY = currentTetramino->getY();
 
         if (direction == KEY_UP) {
-            Tetramino temp = board.currentTetramino;
+            Tetramino temp = *currentTetramino;
             temp.RotateTetra();
             if (board.canMove(temp, currentY, currentX)) {
                 board.clearTetromino(currentY, currentX,
-                                     board.currentTetramino); // Clear current tetromino before rotating
-                board.currentTetramino = temp;
+                                     *currentTetramino); // Clear current tetromino before rotating
+                *currentTetramino = temp;
             }
-        } else if (direction == KEY_LEFT && board.canMove(board.currentTetramino, currentY, currentX - 1)) {
+        } else if (direction == KEY_LEFT && board.canMove(*currentTetramino, currentY, currentX - 1)) {
             currentX--;
-            board.currentTetramino.setX(currentX);
-        } else if (direction == KEY_RIGHT && board.canMove(board.currentTetramino, currentY, currentX + 1)) {
+            currentTetramino->setX(currentX);
+        } else if (direction == KEY_RIGHT && board.canMove(*currentTetramino, currentY, currentX + 1)) {
             currentX++;
-            board.currentTetramino.setX(currentX);
-        } else if (direction == KEY_DOWN && board.canMove(board.currentTetramino, currentY + 1, currentX)) {
+            currentTetramino->setX(currentX);
+        } else if (direction == KEY_DOWN && board.canMove(*currentTetramino, currentY + 1, currentX)) {
             currentY++;
-            board.currentTetramino.setY(currentY);
+            currentTetramino->setY(currentY);
         }
 
-        board.updateBoard(prevY, prevX, board.currentTetramino, currentY, currentX);
+        board.updateBoard(prevY, prevX, *currentTetramino, currentY, currentX);
 
-        if (!board.canMove(board.currentTetramino, currentY + 1, currentX)) {
-            board.fixTetromino(board.currentTetramino, currentY, currentX);
+        if (!board.canMove(*currentTetramino, currentY + 1, currentX)) {
+            board.fixTetromino(*currentTetramino, currentY, currentX);
 
             for (int y = 0; y < boardHeight; ++y) {
                 if (board.isLineFull(y)) {
@@ -91,24 +104,24 @@ void Game::processInput() {
                     board.redrawBoard();
                 }
             }
-            board.spawnTetramino();
+            spawnTetramino();
         }
     }
 }
 
 void Game::makeTetraminoFall() {
     //update score, time ecc
-    int currentX = board.currentTetramino.getX();
-    int currentY = board.currentTetramino.getY();
-    int prevY = board.currentTetramino.getY();
-    if (board.canMove(board.currentTetramino, currentY + 1, currentX)) {
+    int currentX = currentTetramino->getX();
+    int currentY = currentTetramino->getY();
+    int prevY = currentTetramino->getY();
+    if (board.canMove(*currentTetramino, currentY + 1, currentX)) {
         currentY++;
-        board.currentTetramino.setY(currentY);
+        currentTetramino->setY(currentY);
 
-        board.updateBoard(prevY, board.currentTetramino.getX(), board.currentTetramino, currentY,
-                          board.currentTetramino.getX());
+        board.updateBoard(prevY, currentTetramino->getX(), *currentTetramino, currentY,
+                          currentTetramino->getX());
     } else {
-        board.fixTetromino(board.currentTetramino, currentY, currentX);
+        board.fixTetromino(*currentTetramino, currentY, currentX);
 
         for (int y = 0; y < boardHeight; ++y) {
             if (board.isLineFull(y)) {
@@ -120,7 +133,7 @@ void Game::makeTetraminoFall() {
                 board.redrawBoard();
             }
         }
-        board.spawnTetramino();
+        spawnTetramino();
     }
 
 }

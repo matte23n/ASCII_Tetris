@@ -4,12 +4,12 @@
 
 #ifndef TETRIS_SQUARE_H
 #define TETRIS_SQUARE_H
-#include "Tetramino.h"
+#include "../Tetramino.h"
 #include "curses.h"
 
 class Square: public Tetramino {
 public:
-    Square(int x, int y);
+    Square();
 };
 
 

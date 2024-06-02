@@ -10,10 +10,10 @@ add_executable(Ascii_Tetris main.cpp
         Board.h
         Leaderboard.cpp
         Leaderboard.h
-        Line.cpp
-        Line.h
-        Square.cpp
-        Square.h
+        shapes/Line.cpp
+        shapes/Line.h
+        shapes/Square.cpp
+        shapes/Square.h
         Startup_page.cpp
         Startup_page.h
         Tetramino.cpp
@@ -21,6 +21,8 @@ add_executable(Ascii_Tetris main.cpp
         Game.cpp
         Game.h
         GameInfo.cpp
-        GameInfo.h)
+        GameInfo.h
+        shapes/TShape.cpp
+        shapes/TShape.h)
 
 target_link_libraries(Ascii_Tetris ${CURSES_LIBRARIES})

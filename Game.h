@@ -14,15 +14,19 @@ public:
     Game(int width, int height);
     void processInput();
     void updateGameInfo();
-    void updateStatus();
+    void makeTetraminoFall();
     bool isOver();
 
     void setIsGameOver(bool isGameOver);
+
+    void run();
 
 private:
     Board board;
     bool isGameOver;
     GameInfo gameInfo;
+    int boardHeight;
+    int boardWidth;
 };
 
 

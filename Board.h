@@ -27,21 +27,24 @@ public:
 
     Tetramino spawnTetramino();
 
+    bool canMove(Tetramino &tetromino, int newY, int newX);
+
+    Tetramino currentTetramino;
+
+    void updateBoard(int prevY, int prevX, Tetramino &tetromino, int startY, int startX);
+
+    bool isLineFull(int line);
+
+    void clearLine(int line);
+
+    void redrawBoard();
+
 private:
     WINDOW *board_win;
     int boardHeight = 0;
     int boardWidth = 0;
     int **board;
 
-    Tetramino currentTetramino;
-
-    bool isLineFull(int line);
-    void clearLine(int line);
-    void redrawBoard();
-
-    void updateBoard(int prevY, int prevX, Tetramino &tetromino, int startY, int startX);
-
-    bool canMove(Tetramino &tetromino, int newY, int newX);
 };
 
 

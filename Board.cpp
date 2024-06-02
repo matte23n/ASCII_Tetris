@@ -116,47 +116,6 @@ void Board::redrawBoard() {
     wrefresh(board_win);
 }
 
-void Board::moveTetramino(int direction) {
-    int currentX = currentTetramino.getX();
-    int prevX = currentTetramino.getX();
-    int currentY = currentTetramino.getY();
-    int prevY = currentTetramino.getY();
-
-    if (direction == KEY_UP) {
-        Tetramino temp = currentTetramino;
-        temp.RotateTetra();
-        if (canMove(temp, currentY, currentX)) {
-            clearTetromino(currentY, currentX, currentTetramino); // Clear current tetromino before rotating
-            currentTetramino = temp;
-        }
-    } else if (direction == KEY_LEFT && canMove(currentTetramino, currentY, currentX - 1)) {
-        currentX--;
-        currentTetramino.setX(currentX);
-    }
-    else if (direction == KEY_RIGHT && canMove(currentTetramino, currentY, currentX + 1)) {
-        currentX++;
-        currentTetramino.setX(currentX);
-    }
-    else if (direction == KEY_DOWN && canMove(currentTetramino, currentY + 1, currentX)) {
-        currentY++;
-        currentTetramino.setY(currentY);
-    }
-
-    updateBoard(prevY, prevX, currentTetramino, currentY, currentX);
-
-    if (!canMove(currentTetramino, currentY + 1, currentX)) {
-        fixTetromino(currentTetramino, currentY, currentX);
-
-        for (int y = 0; y < boardHeight; ++y) {
-            if (isLineFull(y)) {
-                clearLine(y);
-                redrawBoard();
-            }
-        }
-        spawnTetramino();
-    }
-}
-
 void Board::drawTetromino(int startY, int startX, Tetramino &tetromino) {
     int (*shape)[4] = tetromino.getShape();
     for (int y = 0; y < 4; ++y) {

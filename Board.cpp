@@ -131,6 +131,7 @@ void Board::moveTetramino(int direction) {
         Tetramino temp = currentTetramino;
         temp.RotateTetra();
         if (canMove(temp, currentY, currentX)) {
+            clearTetromino(currentY, currentX, currentTetramino); // Clear current tetromino before rotating
             currentTetramino = temp;
         }
     } else if (direction == KEY_LEFT && canMove(currentTetramino, currentY, currentX - 1)) {

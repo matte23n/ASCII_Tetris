@@ -70,7 +70,7 @@ void Game::run() {
             updateGameInfo();
             lastInfoUpdate = now;
         }
-        moveInterval = 600/gameInfo.getLevel();
+        moveInterval = 1000/(gameInfo.getLevel()/10);
     }
     Leaderboard::writeScore(gameInfo.getScore());
     werase(board.getBoardWIn());

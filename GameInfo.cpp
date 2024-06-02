@@ -3,8 +3,6 @@
 //
 
 #include "GameInfo.h"
-#include <thread>
-#include <chrono>
 
 GameInfo::GameInfo() {
     gameInfo_win = newwin(5, 10, 1, 1);
@@ -15,8 +13,6 @@ GameInfo::GameInfo() {
     wprintw(gameInfo_win, "Time: %d\n", time);
     wnoutrefresh(gameInfo_win);
     nodelay(gameInfo_win, TRUE);
-
-    //wtimeout(gameInfo_win, 2000);
 }
 
 int GameInfo::getFullLines() const {

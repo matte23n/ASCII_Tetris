@@ -18,7 +18,6 @@ Board::Board(int width, int height) {
     }
     keypad(board_win, TRUE);
     keypad(stdscr, TRUE);
-    //wtimeout(board_win, 300);
     nodelay(board_win, TRUE);
 }
 

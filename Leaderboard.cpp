@@ -7,7 +7,7 @@
 #include "MainMenu.h"
 
 using namespace std;
-char *opciones[2]={"main menu","quit"};
+char *options[2]={"Main menu", "Quit"};
 
 Leaderboard::Leaderboard() {
     WINDOW *win = newwin(100, 100, 0, 0);
@@ -38,7 +38,7 @@ void Leaderboard::readLearboard(WINDOW *board) {
             if (i == highlight) {
                 wattron(board, A_REVERSE);
             }
-            mvwprintw(board, i + 1, 10, opciones[i]);
+            mvwprintw(board, i + 1, 10, options[i]);
             wattroff(board, A_REVERSE);
         }
         int c = wgetch(board);

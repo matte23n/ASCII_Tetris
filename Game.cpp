@@ -32,7 +32,6 @@ Game::Game(int width, int heigth) {
 }
 
 void Game::spawnTetramino() {
-    srand(time(NULL));
     currentTetramino = shapes[rand() % 7];
     currentTetramino->setX((rand() % (boardWidth - 3)));
     currentTetramino->setY(0);
@@ -48,8 +47,9 @@ void Game::spawnTetramino() {
 void Game::run() {
     auto lastMove = std::chrono::steady_clock::now();
     auto lastInfoUpdate = std::chrono::steady_clock::now();
-    int moveInterval = 1000;
+    double moveInterval = 1000;
     int infoInterval = 1000;
+    srand(time(NULL));
     spawnTetramino();
 
     while (!isOver()) {
@@ -68,7 +68,7 @@ void Game::run() {
             updateGameInfo();
             lastInfoUpdate = now;
         }
-        moveInterval = 1000/(gameInfo.getLevel()*3);
+        moveInterval = 1000/(gameInfo.getLevel()*1.5);
     }
     Leaderboard::writeScore(gameInfo.getScore());
     werase(board.getBoardWIn());

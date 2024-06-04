@@ -3,7 +3,8 @@
 //
 
 #include "GameOver.h"
-char *scelte[2]={"main menu","quit"};
+
+char *scelte[2] = {"Main menu", "Quit"};
 
 GameOver::GameOver() {
     initscr();
@@ -12,7 +13,7 @@ GameOver::GameOver() {
     nodelay(win, false);
     wprintw(win, "GAME OVER");
     wrefresh(win);
-    int highlight=0;
+    int highlight = 0;
     while (true) {
         for (int i = 0; i < 2; i++) {
             if (i == highlight) {
@@ -42,9 +43,9 @@ GameOver::GameOver() {
             break;
         }
     }
-    if(highlight==0){
+    if (highlight == 0) {
         MainMenu s;
-    }else{
+    } else {
         werase(win);
         refresh();
     }

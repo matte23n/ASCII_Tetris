@@ -4,13 +4,13 @@
 #include "Leaderboard.h"
 
 using namespace std;
-char *options[2]={"Main menu", "Quit"};
+char *options[2] = {"Main menu", "Quit"};
 
 Leaderboard::Leaderboard() {
     WINDOW *win = newwin(100, 100, 0, 0);
     nodelay(win, false);
     keypad(win, true);
-    readLearboard(win);
+    readLeaderboard(win);
 }
 
 void Leaderboard::writeScore(int score) {
@@ -20,52 +20,49 @@ void Leaderboard::writeScore(int score) {
     outputFile.close();
 }
 
-int Leaderboard::getLenght(){
-    int i=0;
+int Leaderboard::getLength() {
+    int i = 0;
     ifstream inputFile;
     inputFile.open("leaderboard.txt");
-    string line;
-    while (!inputFile.eof()){
-        getline(inputFile, line);
+    int number;
+    while (!inputFile.eof()) {
+        inputFile >> number;
         i++;
     }
     inputFile.close();
     return i;
 }
 
-void Leaderboard::readLearboard(WINDOW *board) {
-    int i=getLenght();
-    string line;
+void Leaderboard::readLeaderboard(WINDOW *board) {
+    int i = getLength();
     ifstream inputFile;
     inputFile.open("leaderboard.txt");
-    string ch[i];
-    int j=0;
-    while (getline(inputFile,line)) {
-        ch[j]=line;
+    int numbers[i];
+    int j = 0;
+    while (!inputFile.eof()) {
+        inputFile >> numbers[j];
         j++;
     }
-    string temp;
-    for (int k = 0; k < i-1; ++k) {
-        for (int l = 0; l < i-1; ++l) {
-            if(ch[l].compare(ch[l+1])<0){
-                temp=ch[l];
-                ch[l]=ch[l+1];
-                ch[l+1]=temp;
+    inputFile.close();
+    for (int k = 0; k < i - 1; ++k) {
+        for (int l = 0; l < i - 1; ++l) {
+            if (numbers[l] < numbers[l + 1]) {
+                int temp = numbers[l];
+                numbers[l] = numbers[l + 1];
+                numbers[l + 1] = temp;
             }
         }
     }
-    for (int k = 0; k < i; ++k) {
-        waddstr(board,ch[k].c_str());
-        waddstr(board,"\n");
+    for (int k = 0; k < j; ++k) {
+        wprintw(board, "%d\n", numbers[k]);
     }
-    inputFile.close();
-    int highlight=0;
+    int highlight = 0;
     while (true) {
-        for (int i = 0; i < 2; i++) {
-            if (i == highlight) {
+        for (int m = 0; m < 2; m++) {
+            if (m == highlight) {
                 wattron(board, A_REVERSE);
             }
-            mvwprintw(board, i + 1, 10, options[i]);
+            mvwprintw(board, m + 1, 10, options[m]);
             wattroff(board, A_REVERSE);
         }
         int c = wgetch(board);
@@ -89,9 +86,9 @@ void Leaderboard::readLearboard(WINDOW *board) {
             break;
         }
     }
-    if(highlight==0){
+    if (highlight == 0) {
         MainMenu s;
-    }else{
+    } else {
         werase(board);
         refresh();
     }

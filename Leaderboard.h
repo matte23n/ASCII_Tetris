@@ -8,16 +8,15 @@
 #include "curses.h"
 #include "fstream"
 #include "MainMenu.h"
-#include <string>
 
 class Leaderboard {
 public:
     Leaderboard();
     static void writeScore(int score);
 
-    void readLearboard(WINDOW *board);
+    void readLeaderboard(WINDOW *board);
 
-    int getLenght();
+    int getLength();
 };
 
 

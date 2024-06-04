@@ -1,10 +1,7 @@
 //
 // Created by Matteo Santoro on 09/03/24.
 //
-
 #include "Leaderboard.h"
-#include "fstream"
-#include "MainMenu.h"
 
 using namespace std;
 char *opciones[2]={"main menu","quit"};
@@ -23,13 +20,43 @@ void Leaderboard::writeScore(int score) {
     outputFile.close();
 }
 
-void Leaderboard::readLearboard(WINDOW *board) {
+int Leaderboard::getLenght(){
+    int i=0;
     ifstream inputFile;
     inputFile.open("leaderboard.txt");
-    char ch;
-    while (!inputFile.eof()) {
-        inputFile.get(ch);
-        waddch(board, ch);
+    string line;
+    while (!inputFile.eof()){
+        getline(inputFile, line);
+        i++;
+    }
+    inputFile.close();
+    return i;
+}
+
+void Leaderboard::readLearboard(WINDOW *board) {
+    int i=getLenght();
+    string line;
+    ifstream inputFile;
+    inputFile.open("leaderboard.txt");
+    string ch[i];
+    int j=0;
+    while (getline(inputFile,line)) {
+        ch[j]=line;
+        j++;
+    }
+    string temp;
+    for (int k = 0; k < i-1; ++k) {
+        for (int l = 0; l < i-1; ++l) {
+            if(ch[l].compare(ch[l+1])<0){
+                temp=ch[l];
+                ch[l]=ch[l+1];
+                ch[l+1]=temp;
+            }
+        }
+    }
+    for (int k = 0; k < i; ++k) {
+        waddstr(board,ch[k].c_str());
+        waddstr(board,"\n");
     }
     inputFile.close();
     int highlight=0;

@@ -12,7 +12,9 @@ char *choices[3] = {"New Game", "View Leaderboard", "Quit"};
 
 MainMenu::MainMenu() {
     initscr();
-    WINDOW *win = newwin(60, 60, 0, 0);
+    int xMax, yMax;
+    getmaxyx(stdscr, yMax, xMax);
+    WINDOW *win = newwin(60, 60, 0, (xMax/2));
     nodelay(win, false);
     keypad(win, true);
     wrefresh(win);
@@ -22,7 +24,7 @@ MainMenu::MainMenu() {
             if (i == highlight) {
                 wattron(win, A_REVERSE);
             }
-            mvwprintw(win, i + 1, 1, choices[i]);
+            mvwprintw(win, i + 1, 0, choices[i]);
             wattroff(win, A_REVERSE);
         }
         int c = wgetch(win);

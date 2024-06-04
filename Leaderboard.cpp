@@ -7,7 +7,9 @@ using namespace std;
 char *options[2] = {"Main menu", "Quit"};
 
 Leaderboard::Leaderboard() {
-    WINDOW *win = newwin(100, 100, 0, 0);
+    int xMax, yMax;
+    getmaxyx(stdscr, yMax, xMax);
+    WINDOW *win = newwin(100, 100, 0, (xMax/2));
     nodelay(win, false);
     keypad(win, true);
     readLeaderboard(win);

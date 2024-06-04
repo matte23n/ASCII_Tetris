@@ -8,9 +8,10 @@ char *scelte[2] = {"Main menu", "Quit"};
 
 GameOver::GameOver() {
     initscr();
-    WINDOW *win = newwin(50, 50, 0, 0);
+    int xMax, yMax;
+    getmaxyx(stdscr, yMax, xMax);
+    WINDOW *win = newwin(50, 50, 0, (xMax/2));
     keypad(win, true);
-    nodelay(win, false);
     wprintw(win, "GAME OVER");
     wrefresh(win);
     int highlight = 0;
@@ -19,7 +20,7 @@ GameOver::GameOver() {
             if (i == highlight) {
                 wattron(win, A_REVERSE);
             }
-            mvwprintw(win, i + 1, 1, scelte[i]);
+            mvwprintw(win, i + 3, 0, scelte[i]);
             wattroff(win, A_REVERSE);
         }
         int c = wgetch(win);

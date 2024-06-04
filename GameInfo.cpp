@@ -5,7 +5,9 @@
 #include "GameInfo.h"
 
 GameInfo::GameInfo() {
-    gameInfo_win = newwin(5, 10, 1, 1);
+    int xMax, yMax;
+    getmaxyx(stdscr, yMax, xMax);
+    gameInfo_win = newwin(5, 10, 1, (xMax/2) - 14);
     wclear(gameInfo_win);
     wprintw(gameInfo_win, "Level: %d\n", level);
     wprintw(gameInfo_win, "Score: %d\n", score);

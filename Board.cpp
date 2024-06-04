@@ -9,7 +9,9 @@ Board::Board() {
 }
 
 Board::Board(int width, int height) {
-    board_win = newwin(height + 2, width + 2, 1, 14);
+    int xMax, yMax;
+    getmaxyx(stdscr, yMax, xMax);
+    board_win = newwin(height + 2, width + 2, 1, (xMax/2));
     boardWidth = width;
     boardHeight = height;
     board = new int *[boardHeight];

@@ -63,9 +63,3 @@ void GameInfo::updateStatus() {
 WINDOW *GameInfo::getGameInfoWin() const {
     return gameInfo_win;
 }
-
-void GameInfo::waitRefresh() {
-    //wgetch(gameInfo_win);
-    time += 1;
-    updateStatus();
-}

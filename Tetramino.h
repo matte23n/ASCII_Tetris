@@ -19,15 +19,7 @@ public :
 
     void setY(int y);
 
-    void MoveTetraLeft(WINDOW *tetra, int x, int y);
-
-    void MoveTetraRight(WINDOW *tetra, int x, int y);
-
-    void MoveTetraDown(WINDOW *tetra, int x, int y);
-
     void RotateTetra();
-
-    int getCurrentForm() const;
 
     int (*getShape())[4];
 

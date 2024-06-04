@@ -20,10 +20,6 @@ int Tetramino::getY() {
     return y;
 }
 
-int Tetramino::getCurrentForm() const {
-    return currentForm;
-}
-
 void Tetramino::RotateTetra() {
     if (rotationCount > 1) {
         currentForm = (currentForm + 1) % rotationCount;
@@ -32,18 +28,6 @@ void Tetramino::RotateTetra() {
 
 int (*Tetramino::getShape())[4] {
     return possibleForms[currentForm];
-}
-
-void Tetramino::MoveTetraLeft(WINDOW *tetra, int x, int y) {
-    wmove(tetra, x + 1, y);
-}
-
-void Tetramino::MoveTetraRight(WINDOW *tetra, int x, int y) {
-    wmove(tetra, x - 1, y);
-}
-
-void Tetramino::MoveTetraDown(WINDOW *tetra, int x, int y) {
-    wmove(tetra, x, y - 1);
 }
 
 void Tetramino::setX(int x) {

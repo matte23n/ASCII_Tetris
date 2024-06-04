@@ -156,7 +156,6 @@ void Game::makeTetraminoFall() {
 }
 
 void Game::updateGameInfo() {
-    //board.refresh();
     gameInfo.setTime(gameInfo.getTime() + 1);
     gameInfo.updateStatus();
 }

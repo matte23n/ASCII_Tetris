@@ -4,19 +4,29 @@
 
 #ifndef ASCII_TETRIS_LEADERBOARD_H
 #define ASCII_TETRIS_LEADERBOARD_H
+
 #include <iostream>
 #include "curses.h"
 #include "fstream"
 #include "MainMenu.h"
 
+#define SCORES_PER_PAGE 10
+
+
 class Leaderboard {
 public:
     Leaderboard();
+
     static void writeScore(int score);
 
-    void readLeaderboard(WINDOW *board);
+    void readLeaderboard();
 
     int getLength();
+
+private:
+    WINDOW *board;
+
+    void printScores(int currentPage, int totalScores, int totalPages, int numbers[]);
 };
 
 

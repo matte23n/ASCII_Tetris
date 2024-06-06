@@ -103,6 +103,8 @@ void Board::redrawBoard() {
         for (int x = 0; x < boardWidth; ++x) {
             if (board[y][x]) {
                 mvwprintw(board_win, y + 1, x + 1, "X");
+            } else {
+                mvwprintw(board_win, y + 1, x + 1, ".");
             }
         }
     }
@@ -126,7 +128,7 @@ void Board::clearTetromino(int startY, int startX, Tetramino &tetromino) {
     for (int y = 0; y < 4; ++y) {
         for (int x = 0; x < 4; ++x) {
             if (shape[y][x]) {
-                mvwprintw(board_win, startY + y + 1, startX + x + 1, " ");
+                mvwprintw(board_win, startY + y + 1, startX + x + 1, ".");
             }
         }
     }
@@ -140,6 +142,11 @@ int Board::getInput() {
 void Board::clear() {
     wclear(board_win);
     addBorder();
+    for (int y = 0; y < boardHeight; ++y) {
+        for (int x = 0; x < boardWidth; ++x) {
+            mvwprintw(board_win, y + 1, x + 1, ".");
+        }
+    }
 }
 
 void Board::refresh() {

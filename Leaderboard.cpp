@@ -25,27 +25,42 @@ void Leaderboard::writeScore(int score) {
 int Leaderboard::getLength() {
     int i = 0;
     ifstream inputFile;
-    inputFile.open("leaderboard.txt");
+    inputFile.open("leaderboard.txt", ios::in);
     int number;
     while (!inputFile.eof()) {
         inputFile >> number;
-        i++;
+        if (number) {
+            i++;
+        }
+        number = 0;
     }
     inputFile.close();
     return i;
 }
 
 void Leaderboard::readLeaderboard() {
-    int totalScores = getLength();
     ifstream inputFile;
     inputFile.open("leaderboard.txt");
+    int highlight = 0;
+    if (!inputFile.is_open()) {
+        //File does not exist
+        wprintw(board, "%s\n", "No games finished");
+        setupMenuLoop(highlight, 0, 0, 0, {});
+        return;
+    }
+    int totalScores = getLength();
     int numbers[totalScores];
     int j = 0;
     int currentPage = 0;
+    int curScore = 0;
     int totalPages = (totalScores / SCORES_PER_PAGE) + (totalScores % SCORES_PER_PAGE > 0);
     while (!inputFile.eof()) {
-        inputFile >> numbers[j];
-        j++;
+        inputFile >> curScore;
+        if (curScore) {
+            numbers[j] = curScore;
+            j++;
+        }
+        curScore = 0;
     }
     inputFile.close();
     for (int k = 0; k < totalScores - 1; ++k) {
@@ -58,7 +73,17 @@ void Leaderboard::readLeaderboard() {
         }
     }
     printScores(currentPage, totalScores, totalPages, numbers);
-    int highlight = 0;
+    setupMenuLoop(highlight, currentPage, totalScores, totalPages, numbers);
+    if (highlight == 0) {
+        MainMenu s;
+    } else {
+        werase(board);
+        refresh();
+    }
+
+}
+
+void Leaderboard::setupMenuLoop(int &highlight, int currentPage, int totalScores, int totalPages, int numbers[]) {
     while (true) {
         for (int m = 0; m < 4; m++) {
             if (m == highlight) {
@@ -97,12 +122,6 @@ void Leaderboard::readLeaderboard() {
                 printScores(currentPage, totalScores, totalPages, numbers);
             }
         }
-    }
-    if (highlight == 0) {
-        MainMenu s;
-    } else {
-        werase(board);
-        refresh();
     }
 
 }

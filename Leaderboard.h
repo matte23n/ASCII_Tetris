@@ -26,6 +26,8 @@ public:
 private:
     WINDOW *board;
 
+    void setupMenuLoop(int &highlight, int currentPage, int totalScores, int totalPages, int numbers[]);
+
     void printScores(int currentPage, int totalScores, int totalPages, int numbers[]);
 };
 
